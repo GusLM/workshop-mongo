@@ -2,6 +2,7 @@ package com.gustavosantos.workshop_mongo.services;
 
 import com.gustavosantos.workshop_mongo.domain.User;
 import com.gustavosantos.workshop_mongo.repository.UserRepository;
+import com.gustavosantos.workshop_mongo.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,5 +18,9 @@ public class UserService {
     public Page<User> findAll(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return repository.findAll(pageable);
+    }
+
+    public User findById(String id) {
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 }

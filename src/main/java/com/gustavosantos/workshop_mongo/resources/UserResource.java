@@ -7,10 +7,7 @@ import com.gustavosantos.workshop_mongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,5 +27,11 @@ public class UserResource {
         Page<User> result = service.findAll(page, size);
         Page<UserDTO> userDTOPage = result.map(user -> new UserDTO(user));
         return ResponseEntity.ok().body(PageResponse.from(userDTOPage));
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<UserDTO> findById(@PathVariable String id) {
+        User obj = service.findById(id);
+        return ResponseEntity.ok().body(new UserDTO(obj));
     }
 }
