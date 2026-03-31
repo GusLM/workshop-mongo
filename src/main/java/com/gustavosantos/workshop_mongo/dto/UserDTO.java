@@ -4,6 +4,7 @@ import com.gustavosantos.workshop_mongo.domain.User;
 
 public class UserDTO {
 
+    private String id;
     private String name;
     private String email;
 
@@ -11,8 +12,13 @@ public class UserDTO {
     }
 
     public UserDTO(User obj) {
+        id = obj.getId();
         name = obj.getName();
         email = obj.getEmail();
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
