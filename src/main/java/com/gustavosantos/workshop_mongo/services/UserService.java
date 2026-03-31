@@ -40,6 +40,14 @@ public class UserService {
         return repository.save(obj);
     }
 
+    public void delete(String id) {
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("User not found with id: " + id);
+        }
+        repository.deleteById(id);
+
+    }
+
     public void updateUser(User entity, UserDTO dto) {
         entity.setName(dto.getName());
         entity.setEmail(dto.getEmail());
