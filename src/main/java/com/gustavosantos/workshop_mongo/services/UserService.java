@@ -1,6 +1,7 @@
 package com.gustavosantos.workshop_mongo.services;
 
 import com.gustavosantos.workshop_mongo.domain.User;
+import com.gustavosantos.workshop_mongo.dto.UserDTO;
 import com.gustavosantos.workshop_mongo.repository.UserRepository;
 import com.gustavosantos.workshop_mongo.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,16 @@ public class UserService {
 
     public User findById(String id) {
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+    }
+
+    public User insert(UserDTO dto) {
+        User user = new User();
+        updateUser(user, dto);
+        return repository.save(user);
+    }
+
+    public void updateUser(User entity, UserDTO dto) {
+        entity.setName(dto.getName());
+        entity.setEmail(dto.getEmail());
     }
 }
