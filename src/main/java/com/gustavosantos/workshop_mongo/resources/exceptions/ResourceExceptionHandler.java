@@ -22,7 +22,6 @@ public class ResourceExceptionHandler {
                 "Not found",
                 e.getMessage(),
                 request.getRequestURI()
-
         );
         return ResponseEntity.status(status).body(error);
     }
