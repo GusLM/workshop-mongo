@@ -32,10 +32,7 @@ public class UserService {
     }
 
     public User update(String id, UserDTO dto) {
-        if (!repository.existsById(id)) {
-            throw new ResourceNotFoundException("User not found with id: " + id);
-        }
-        User obj = repository.getUserById(id);
+        User obj = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
         updateUser(obj, dto);
         return repository.save(obj);
     }
@@ -45,7 +42,6 @@ public class UserService {
             throw new ResourceNotFoundException("User not found with id: " + id);
         }
         repository.deleteById(id);
-
     }
 
     public void updateUser(User entity, UserDTO dto) {
