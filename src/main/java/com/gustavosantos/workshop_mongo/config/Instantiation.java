@@ -2,6 +2,7 @@ package com.gustavosantos.workshop_mongo.config;
 
 import com.gustavosantos.workshop_mongo.domain.Post;
 import com.gustavosantos.workshop_mongo.domain.User;
+import com.gustavosantos.workshop_mongo.dto.AuthorDTO;
 import com.gustavosantos.workshop_mongo.repository.PostRepository;
 import com.gustavosantos.workshop_mongo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +38,9 @@ public class Instantiation implements CommandLineRunner {
 
         userRepository.saveAll(Arrays.asList(maria, alex, bob));
 
-        Post post1 = new Post(null, sdf.parse("2026-01-12"), "Post 1", "This is the first post", maria);
-        Post post2 = new Post(null, sdf.parse("2026-01-13"), "Post 2", "This is the second post", alex);
-        Post post3 = new Post(null, sdf.parse("2026-01-14"), "Post 3", "This is the third post", bob);
+        Post post1 = new Post(null, sdf.parse("2026-01-12"), "Post 1", "This is the first post", new AuthorDTO(maria));
+        Post post2 = new Post(null, sdf.parse("2026-01-13"), "Post 2", "This is the second post", new AuthorDTO(alex));
+        Post post3 = new Post(null, sdf.parse("2026-01-14"), "Post 3", "This is the third post",new AuthorDTO(bob));
 
         postRepository.saveAll(Arrays.asList(post1, post2, post3));
     }
