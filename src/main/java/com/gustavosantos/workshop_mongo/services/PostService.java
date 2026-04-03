@@ -22,6 +22,6 @@ public class PostService {
 
     public Page<Post> findByTitle(String title, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return repository.findByTitleContainingIgnoreCase(title, pageable);
+        return repository.findByTitle(title, pageable);
     }
 }
