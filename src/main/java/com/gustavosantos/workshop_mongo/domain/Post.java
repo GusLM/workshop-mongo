@@ -20,7 +20,7 @@ public class Post {
     private String body;
     private AuthorDTO author;
 
-    private final List<CommentDTO> comments = new ArrayList<>();
+    private List<CommentDTO> comments = new ArrayList<>();
 
     public Post() {
     }

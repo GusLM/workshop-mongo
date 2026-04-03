@@ -38,13 +38,16 @@ public class Instantiation implements CommandLineRunner {
 
         userRepository.saveAll(Arrays.asList(maria, alex, bob));
 
-        Post post1 = new Post(null, sdf.parse("2026-01-12"), "Post 1", "This is the first post", new AuthorDTO(maria));
-        Post post2 = new Post(null, sdf.parse("2026-01-13"), "Post 2", "This is the second post", new AuthorDTO(alex));
-        Post post3 = new Post(null, sdf.parse("2026-01-14"), "Post 3", "This is the third post",new AuthorDTO(bob));
+        Post post1 = new Post(null, sdf.parse("2024-01-12"), "Good morning", "This is the first post", new AuthorDTO(maria));
+        Post post2 = new Post(null, sdf.parse("2025-05-13"), "Good afternoon", "This is the second post", new AuthorDTO(alex));
+        Post post3 = new Post(null, sdf.parse("2026-03-14"), "Good night", "This is the third post",new AuthorDTO(bob));
 
-        post1.addComment(new CommentDTO("Test comment", sdf.parse("2026-01-12"), new AuthorDTO(maria)));
-        post1.addComment(new CommentDTO("Test comment 2", sdf.parse("2026-01-12"), new AuthorDTO(alex)));
-        post2.addComment(new CommentDTO("Test comment 3", sdf.parse("2026-01-13"), new AuthorDTO(bob)));
+        CommentDTO comment1 = new CommentDTO("Github", sdf.parse("2024-01-16"), new AuthorDTO(maria));
+        CommentDTO comment2 = new CommentDTO("Java", sdf.parse("2025-05-17"), new AuthorDTO(alex));
+        CommentDTO comment3 = new CommentDTO("IntelliJ IDE", sdf.parse("2026-03-18"), new AuthorDTO(bob));
+        post1.addComment(comment1);
+        post1.addComment(comment2);
+        post2.addComment(comment3);
 
         postRepository.saveAll(Arrays.asList(post1, post2, post3));
 
