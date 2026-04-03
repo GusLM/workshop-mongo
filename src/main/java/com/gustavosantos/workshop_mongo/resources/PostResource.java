@@ -1,12 +1,13 @@
 package com.gustavosantos.workshop_mongo.resources;
 
 import com.gustavosantos.workshop_mongo.domain.Post;
+import com.gustavosantos.workshop_mongo.dto.PageResponse;
+import com.gustavosantos.workshop_mongo.resources.util.URL;
 import com.gustavosantos.workshop_mongo.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/posts")
@@ -22,9 +23,14 @@ public class PostResource {
     }
 
     @GetMapping(value = "/title")
-    public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "text", defaultValue = "") String text) {
+    public ResponseEntity<PageResponse<Post>> findByTitle(
+            @RequestParam(value = "text", defaultValue = "") String text,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+
+    ) {
         text = URL.decodeParam(text);
-        List<Post> posts = service.findByTitle(text);
-        return ResponseEntity.ok().body(posts);
+        Page<Post> posts = service.findByTitle(text, page, size);
+        return ResponseEntity.ok().body(PageResponse.from(posts));
     }
 }

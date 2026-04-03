@@ -4,9 +4,10 @@ import com.gustavosantos.workshop_mongo.domain.Post;
 import com.gustavosantos.workshop_mongo.repository.PostRepository;
 import com.gustavosantos.workshop_mongo.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class PostService {
@@ -19,7 +20,8 @@ public class PostService {
                 .orElseThrow(() -> new ResourceNotFoundException("Post with ID: " + id + " not found"));
     }
 
-    public List<Post> findByTitle(String title) {
-        return repository.findByTitleContainingIgnoreCase(title);
+    public Page<Post> findByTitle(String title, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return repository.findByTitleContainingIgnoreCase(title, pageable);
     }
 }
