@@ -21,9 +21,15 @@ public class UserResource {
 
     @GetMapping
     public ResponseEntity<PageResponse<UserDTO>> findAll(
+            @RequestParam(required = false) String name,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
+        if (name != null && !name.isBlank()) {
+            Page<User> pageUser = service.findByName(name,page,size);
+            Page<UserDTO> pageUserDTO = pageUser.map(user -> new UserDTO(user));
+            return ResponseEntity.ok().body(PageResponse.from(pageUserDTO));
+        }
         Page<User> result = service.findAll(page, size);
         Page<UserDTO> userDTOPage = result.map(user -> new UserDTO(user));
         return ResponseEntity.ok().body(PageResponse.from(userDTOPage));

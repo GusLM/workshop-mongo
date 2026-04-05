@@ -25,6 +25,14 @@ public class UserService {
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
+    public Page<User> findByName(String name, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        if(repository.findByName(name,pageable).isEmpty()) {
+            throw new ResourceNotFoundException("User not found");
+        }
+        return repository.findByName(name,pageable);
+    }
+
     public User insert(UserDTO dto) {
         User user = new User();
         updateUser(user, dto);
