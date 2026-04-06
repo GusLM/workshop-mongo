@@ -3,6 +3,7 @@ package com.gustavosantos.workshop_mongo.resources;
 import com.gustavosantos.workshop_mongo.domain.User;
 import com.gustavosantos.workshop_mongo.dto.PageResponse;
 import com.gustavosantos.workshop_mongo.dto.UserDTO;
+import com.gustavosantos.workshop_mongo.resources.util.URL;
 import com.gustavosantos.workshop_mongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,6 +27,7 @@ public class UserResource {
             @RequestParam(defaultValue = "10") int size
     ) {
         if (name != null && !name.isBlank()) {
+            name = URL.decodeParam(name);
             Page<User> pageUser = service.findByName(name,page,size);
             Page<UserDTO> pageUserDTO = pageUser.map(user -> new UserDTO(user));
             return ResponseEntity.ok().body(PageResponse.from(pageUserDTO));
